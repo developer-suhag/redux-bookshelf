@@ -32,6 +32,13 @@ function bookReducer(state = initialState, action) {
       };
       return newState;
     }
+    case "ADD_TO_FINSHED_LIST": {
+      const newState = {
+        ...state,
+        finishedList: [...state.finishedList, action.payload],
+      };
+      return newState;
+    }
     default:
       return state;
   }

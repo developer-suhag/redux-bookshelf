@@ -2,6 +2,7 @@ import React from "react";
 import { HiCheckCircle, HiMinusCircle, HiPlusCircle } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addToFinshedList,
   addToReadingList,
   removeFromReadingList,
 } from "../../redux/actions/bookAction";
@@ -33,6 +34,7 @@ const SingleBook = (props) => {
               className={styles.minus_icon}
             />
             <HiCheckCircle
+              onClick={() => dispatch(addToFinshedList(props.book))}
               title="Mark as Finish"
               className={styles.check_icon}
             />
