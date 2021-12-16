@@ -11,6 +11,7 @@ const SingleBook = (props) => {
   const { _id, title, author, coverImageUrl, synopsis } = props.book;
   const dispatch = useDispatch();
   const readingList = useSelector((state) => state.books.readingList);
+  const finishedBooks = useSelector((state) => state.books.finishedList);
   return (
     <div className="card d-flex mb-3 p-3" style={{ position: "relative" }}>
       <div className="row">
@@ -25,28 +26,32 @@ const SingleBook = (props) => {
           </div>
         </div>
       </div>
-      <div className={styles.control_icons}>
-        {readingList.find((book) => book._id === _id) ? (
-          <>
-            <HiMinusCircle
-              onClick={() => dispatch(removeFromReadingList(_id))}
-              title="Remove from list"
-              className={styles.minus_icon}
+      {finishedBooks.find((book) => book._id === _id) ? (
+        <span></span>
+      ) : (
+        <div className={styles.control_icons}>
+          {readingList.find((book) => book._id === _id) ? (
+            <>
+              <HiMinusCircle
+                onClick={() => dispatch(removeFromReadingList(_id))}
+                title="Remove from list"
+                className={styles.minus_icon}
+              />
+              <HiCheckCircle
+                onClick={() => dispatch(addToFinshedList(props.book))}
+                title="Mark as Finish"
+                className={styles.check_icon}
+              />
+            </>
+          ) : (
+            <HiPlusCircle
+              onClick={() => dispatch(addToReadingList(props.book))}
+              title="Add to Reading"
+              className={styles.plus_icon}
             />
-            <HiCheckCircle
-              onClick={() => dispatch(addToFinshedList(props.book))}
-              title="Mark as Finish"
-              className={styles.check_icon}
-            />
-          </>
-        ) : (
-          <HiPlusCircle
-            onClick={() => dispatch(addToReadingList(props.book))}
-            title="Add to Reading"
-            className={styles.plus_icon}
-          />
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
